@@ -1,0 +1,8 @@
+{"backend_name":"ibmq_qasm_simulator","backend_version":"0.4.1","date":"2020-03-15T22:24:17.402626",
+"job_id":"5e6eab0e39ef97001935d35f","metadata":{"max_memory_mb":257942,"omp_enabled":true,
+"parallel_experiments":1,"time_taken":0.0034688500000000003},"qobj_id":"1dbef91c-d181-4d08-a1a0-25f519eddbf8",
+"results":[{"data":{"counts":{"0x1":1024}},"header":{"clbit_labels":[["c",0],["c",1],["c",2],["c",3],["c",4]],"creg_sizes":[["c",5]],
+"memory_slots":5,"n_qubits":5,"name":"circuit20556","qreg_sizes":[["q",5]],"qubit_labels":[["q",0],["q",1],["q",2],["q",3],["q",4]]},
+"metadata":{"measure_sampling":true,"method":"stabilizer","parallel_shots":1,"parallel_state_update":16},"seed_simulator":2071829569,
+"shots":1024,"status":"DONE","success":true,"time_taken":0.003323234}],
+"status":"COMPLETED","success":true,"time_taken":0.0034688500000000003}
