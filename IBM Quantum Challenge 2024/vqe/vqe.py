@@ -1,3 +1,7 @@
+!pip install qiskit-aer
+
+!pip install qiskit-ibm-runtime # Install qiskit-ibm-runtime which includes qiskit_serverless
+
 from qiskit_aer import AerSimulator
 import logging
 from typing import Optional
@@ -6,19 +10,15 @@ import numpy as np
 from scipy.optimize import minimize
 
 from qiskit import QuantumCircuit
-from qiskit_ibm_runtime import (
+from qiskit_ibm_runtime import ( # Now this import should work
     EstimatorV2 as Estimator,
     SamplerV2 as Sampler,
     QiskitRuntimeService,
     Session,
 )
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
-from qiskit_serverless import (
-    distribute_task,
-    get_arguments,
-    get,
-    save_result,
-)
+
+Logging = logging.getLogger(__name__)
 
 def run(params, ansatz, hamiltonian, estimator, callback_dict):
     """Return callback function that uses Estimator instance,
@@ -36,7 +36,7 @@ def run(params, ansatz, hamiltonian, estimator, callback_dict):
     """
     result = estimator.run([(ansatz, [hamiltonian], [params])]).result()
     energy = result[0].data.evs[0]
-    
+
     # Keep track of the number of iterations
     callback_dict["iters"] += 1
     # Set the prev_vector to the latest one
@@ -64,7 +64,7 @@ def run(params, ansatz, hamiltonian, estimator, callback_dict):
         end="\r",
         flush=True,
     )
-    
+
     return energy, result
 
 
@@ -92,7 +92,7 @@ def run_vqe(initial_parameters, ansatz, operator, estimator, method):
         "_total_time": 0,
         "_prev_time": None,
     }
-   
+
     result = minimize(
         cost_func,
         initial_parameters,
@@ -103,54 +103,11 @@ def run_vqe(initial_parameters, ansatz, operator, estimator, method):
 
 
 if __name__ == "__main__":
-    arguments = get_arguments()
-
-    service = arguments.get("service")
-
-    ansatz = arguments.get("ansatz")
-    operator = arguments.get("operator")
-    method = arguments.get("method", "COBYLA")
-    initial_parameters = arguments.get("initial_parameters")
-        
-    if initial_parameters is None:
-        initial_parameters = 2 * np.pi * np.random.rand(ansatz.num_parameters)
-
-    
-    if service:
-        backend = service.least_busy(operational=True, simulator=False)
-    else:
-        backend = AerSimulator(method='density_matrix')
-        
-    if initial_parameters is None:
-        initial_parameters = 2 * np.pi * np.random.rand(ansatz.num_parameters)
-    
-    if service:
-        with Session(service=service, backend=backend) as session:
-            estimator = Estimator(session=session)
-            vqe_result, callback_dict = run_vqe(
-                initial_parameters=initial_parameters,
-                ansatz=ansatz,
-                operator=operator,
-                estimator=estimator,
-                method=method,
-            )
-    else:
-        estimator = Estimator(backend=backend)
-        vqe_result, callback_dict = run_vqe(
-            initial_parameters=initial_parameters,
-            ansatz=ansatz,
-            operator=operator,
-            estimator=estimator,
-            method=method,
-        )
-    
-    
-    save_result(
-        {
-            "optimal_point": vqe_result.x.tolist(),
-            "optimal_value": vqe_result.fun,
-            "optimizer_time": callback_dict.get("_total_time", 0),
-             "iters": callback_dict["iters"],
-            "cost_history" : callback_dict["cost_history"]
-        }
-    )
+    # Removed call to get_arguments, replace with how you want to get arguments
+    # For example, you might get them from command line using argparse 
+    # Or you might hardcode them for testing
+    service = None # Replace with your service if needed
+    ansatz =  QuantumCircuit(2) # Replace with your ansatz
+    operator = None # Replace with your operator
+    method = "COBYLA" 
+    initial_parameters = None # Or
