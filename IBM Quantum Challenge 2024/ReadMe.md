@@ -6,6 +6,10 @@ Now, we’re looking for quantum advantage, where quantum computers are the best
 
 This challenge is to uncover and implement quantum algorithms and apply them to real-world use cases
 Solving problems with real-world impact means thinking about who we’re impacting and how.
+
+***UN Declares 2025 International Year Of Quantum Science And Technology*** 
+June 7, 2024, the United Nations officially recognised the importance and potential of quantum technologies after a General Assembly meeting declared 2025 as the International Year of Quantum Science and Technology (IYQ) 
+
 We MUST research and develop technology responsibly. 
 To that end, I have been researching the societal implications of quantum computing, and my role as a quantum computing developer in mitigating potentially undesired consequences of the technology. 
 
